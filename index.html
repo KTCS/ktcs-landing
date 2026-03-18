@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KTCS | Knowledge Transfer Consulting Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   KTCS LANDING PAGE — Production v1.0
+   Stack: Vanilla HTML/CSS/JS — zero dependencies
+   Deploy: WordPress page (Full-width template),
+           Azure Static Web Apps, or any static host
+   ============================================= */
+
+:root {
+  --navy:       #0B1E3A;
+  --navy-mid:   #122A52;
+  --navy-light: #1A3A6E;
+  --steel:      #2C4A72;
+  --gold:       #C8922A;
+  --gold-light: #E8B455;
+  --gold-pale:  #F5E6C8;
+  --white:      #FFFFFF;
+  --off-white:  #F6F7F9;
+  --smoke:      #EEF0F4;
+  --mid-gray:   #8A94A6;
+  --dark-gray:  #3D4A5C;
+  --text:       #1A2535;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --max-w: 1200px;
+  --radius: 8px;
+  --transition: 0.25s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── UTILITIES ─────────────────────────────── */
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+img { display: block; max-width: 100%; }
+
+/* ── NAV ───────────────────────────────────── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(11, 30, 58, 0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(200, 146, 42, 0.2);
+  transition: box-shadow var(--transition);
+}
+#nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; height: 68px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.35rem; font-weight: 700;
+  color: var(--white); text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.nav-logo span { color: var(--gold); }
+
+.nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+.nav-links a {
+  font-size: 0.875rem; font-weight: 500; letter-spacing: 0.03em;
+  color: rgba(255,255,255,0.75); text-decoration: none;
+  padding: 0.5rem 0.85rem; border-radius: var(--radius);
+  transition: color var(--transition), background var(--transition);
+}
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.07); }
+.nav-cta {
+  background: var(--gold) !important;
+  color: var(--navy) !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1.25rem !important;
+}
+.nav-cta:hover { background: var(--gold-light) !important; }
+
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.nav-toggle span {
+  display: block; width: 22px; height: 2px;
+  background: var(--white); margin: 5px 0;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* ── HERO ──────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
+  display: flex; align-items: center;
+  padding: 120px 0 80px;
+  position: relative; overflow: hidden;
+}
+
+/* Subtle grid texture */
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,146,42,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,146,42,0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+/* Gold accent bar */
+#hero::after {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, transparent, var(--gold), transparent);
+}
+
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: var(--max-w); margin: 0 auto; padding: 0 2rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem;
+}
+.hero-eyebrow::before {
+  content: ''; display: block;
+  width: 32px; height: 2px; background: var(--gold);
+}
+
+.hero-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-weight: 700; line-height: 1.1;
+  color: var(--white); margin-bottom: 1.5rem;
+}
+.hero-h1 em { font-style: normal; color: var(--gold-light); }
+
+.hero-sub {
+  font-size: 1.1rem; font-weight: 300; line-height: 1.7;
+  color: rgba(255,255,255,0.72); margin-bottom: 2.5rem;
+  max-width: 520px;
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.875rem 1.75rem; border-radius: var(--radius);
+  font-family: var(--font-body); font-size: 0.925rem; font-weight: 600;
+  text-decoration: none; cursor: pointer; border: none;
+  transition: all var(--transition);
+}
+.btn-primary {
+  background: var(--gold); color: var(--navy);
+}
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(200,146,42,0.35); }
+.btn-ghost {
+  background: transparent; color: var(--white);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+
+.hero-badges { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.badge {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.15);
+  padding: 0.35rem 0.75rem; border-radius: 4px;
+}
+
+/* Hero stats panel */
+.hero-stats {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(200,146,42,0.25);
+  border-radius: 12px; padding: 2.5rem;
+  backdrop-filter: blur(8px);
+}
+.hero-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.stat-item {
+  padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.stat-item:nth-child(2n) { border-right: none; }
+.stat-item:nth-last-child(-n+2) { border-bottom: none; }
+.stat-num {
+  font-family: var(--font-display); font-size: 2.4rem; font-weight: 700;
+  color: var(--gold-light); line-height: 1;
+  margin-bottom: 0.35rem;
+}
+.stat-label { font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
+
+/* ── GUIDE-ME BAND ─────────────────────────── */
+#guide {
+  background: var(--navy);
+  padding: 4rem 0;
+  border-top: 1px solid rgba(200,146,42,0.15);
+  border-bottom: 1px solid rgba(200,146,42,0.15);
+}
+.guide-label {
+  text-align: center; font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.guide-heading {
+  text-align: center; font-family: var(--font-display);
+  font-size: 1.75rem; font-weight: 600;
+  color: var(--white); margin-bottom: 2.5rem;
+}
+.guide-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.guide-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 1.75rem;
+  cursor: pointer; text-decoration: none;
+  transition: all var(--transition); display: block;
+  position: relative; overflow: hidden;
+}
+.guide-card::before {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--gold); transform: scaleX(0);
+  transition: transform var(--transition);
+}
+.guide-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(200,146,42,0.35); transform: translateY(-2px); }
+.guide-card:hover::before { transform: scaleX(1); }
+.guide-icon {
+  font-size: 1.6rem; margin-bottom: 1rem;
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+  background: rgba(200,146,42,0.12); border-radius: 8px;
+}
+.guide-title { font-weight: 600; font-size: 0.95rem; color: var(--white); margin-bottom: 0.4rem; }
+.guide-desc { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+.guide-arrow { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--gold); opacity: 0; transition: opacity var(--transition); font-size: 1rem; }
+.guide-card:hover .guide-arrow { opacity: 1; }
+
+/* ── SECTION SHARED ────────────────────────── */
+.section { padding: 6rem 0; }
+.section-alt { background: var(--off-white); }
+.section-dark { background: var(--navy); }
+
+.section-label {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+}
+.section-heading {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 600; line-height: 1.2; color: var(--text);
+  margin-bottom: 1rem;
+}
+.section-heading.light { color: var(--white); }
+.section-sub { font-size: 1rem; color: var(--mid-gray); max-width: 580px; line-height: 1.7; }
+.section-sub.light { color: rgba(255,255,255,0.6); }
+
+/* ── TRIFECTA ──────────────────────────────── */
+#trifecta { background: var(--navy); padding: 6rem 0; }
+.trifecta-intro { text-align: center; max-width: 640px; margin: 0 auto 4rem; }
+.trifecta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.trifecta-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(200,146,42,0.2);
+  border-radius: 12px; padding: 2.5rem;
+  text-align: center; position: relative; overflow: hidden;
+  transition: all var(--transition);
+}
+.trifecta-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+}
+.trifecta-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+.trifecta-num {
+  font-family: var(--font-display); font-size: 3.5rem; font-weight: 700;
+  color: rgba(200,146,42,0.15); line-height: 1; margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+.trifecta-title { font-size: 1.15rem; font-weight: 600; color: var(--white); margin-bottom: 0.75rem; }
+.trifecta-desc { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+.trifecta-tag {
+  display: inline-block; margin-top: 1.25rem;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid rgba(200,146,42,0.3);
+  padding: 0.3rem 0.75rem; border-radius: 4px;
+}
+
+/* ── SERVICES ──────────────────────────────── */
+.services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem; }
+.service-card {
+  background: var(--white); border: 1px solid var(--smoke);
+  border-radius: 12px; padding: 2rem;
+  transition: all var(--transition);
+  display: flex; flex-direction: column;
+}
+.service-card:hover { box-shadow: 0 12px 40px rgba(11,30,58,0.1); border-color: rgba(200,146,42,0.3); transform: translateY(-2px); }
+.service-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  background: var(--navy); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem; font-size: 1.3rem;
+}
+.service-title { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+.service-desc { font-size: 0.875rem; color: var(--mid-gray); line-height: 1.65; flex: 1; }
+.service-link {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.825rem; font-weight: 600; color: var(--gold);
+  text-decoration: none; margin-top: 1.25rem;
+  transition: gap var(--transition);
+}
+.service-link:hover { gap: 0.6rem; }
+
+/* ── DOMAINS ───────────────────────────────── */
+.domains-wrap { margin-top: 3rem; }
+.domains-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.domain-pill {
+  background: var(--white); border: 1px solid var(--smoke);
+  border-radius: 8px; padding: 1rem 1.25rem;
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  transition: all var(--transition); cursor: default;
+}
+.domain-pill:hover { border-color: rgba(200,146,42,0.4); background: var(--gold-pale); }
+.domain-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); margin-top: 6px; flex-shrink: 0; }
+.domain-name { font-size: 0.875rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+.domain-sub { font-size: 0.75rem; color: var(--mid-gray); margin-top: 2px; }
+
+/* Three-layer callout */
+.layers-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; margin-top: 2rem;
+}
+.layer-chip {
+  border-radius: 8px; padding: 1.25rem;
+  text-align: center;
+}
+.layer-chip.tech { background: rgba(11,30,58,0.06); border: 1px solid rgba(11,30,58,0.12); }
+.layer-chip.func { background: rgba(200,146,42,0.07); border: 1px solid rgba(200,146,42,0.2); }
+.layer-chip.user { background: rgba(44,74,114,0.07); border: 1px solid rgba(44,74,114,0.15); }
+.layer-name { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+.layer-name.tech { color: var(--navy); }
+.layer-name.func { color: var(--gold); }
+.layer-name.user { color: var(--steel); }
+.layer-desc { font-size: 0.78rem; color: var(--mid-gray); line-height: 1.4; }
+
+/* ── TRAINING CENTER ───────────────────────── */
+#training-center { background: var(--navy); }
+.tc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+.tc-feature-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.tc-feature {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1.25rem; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07); border-radius: 8px;
+}
+.tc-feature-icon {
+  width: 40px; height: 40px; flex-shrink: 0; border-radius: 8px;
+  background: rgba(200,146,42,0.12); display: flex; align-items: center;
+  justify-content: center; font-size: 1.1rem;
+}
+.tc-feature-title { font-weight: 600; font-size: 0.925rem; color: var(--white); margin-bottom: 0.25rem; }
+.tc-feature-desc { font-size: 0.825rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+.tc-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.tc-spec {
+  background: rgba(200,146,42,0.08); border: 1px solid rgba(200,146,42,0.2);
+  border-radius: 8px; padding: 1.25rem; text-align: center;
+}
+.tc-spec-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--gold-light); line-height: 1; }
+.tc-spec-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.35rem; }
+.tc-cta-box {
+  margin-top: 1.5rem; padding: 1.5rem;
+  background: rgba(200,146,42,0.1); border: 1px solid rgba(200,146,42,0.25);
+  border-radius: 10px;
+}
+.tc-cta-box p { font-size: 0.9rem; color: rgba(255,255,255,0.65); margin-bottom: 1rem; line-height: 1.6; }
+
+/* ── TESTIMONIALS ──────────────────────────── */
+.testimonials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem; }
+.testimonial-card {
+  background: var(--white); border: 1px solid var(--smoke);
+  border-radius: 12px; padding: 2rem;
+  position: relative;
+}
+.testimonial-card::before {
+  content: '\201C';
+  position: absolute; top: 1rem; left: 1.5rem;
+  font-family: var(--font-display); font-size: 4rem;
+  color: var(--gold-pale); line-height: 1;
+}
+.testimonial-text {
+  font-size: 0.9rem; line-height: 1.7; color: var(--dark-gray);
+  padding-top: 1.5rem; margin-bottom: 1.5rem;
+}
+.testimonial-source { display: flex; align-items: center; gap: 0.75rem; }
+.testimonial-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--navy); display: flex; align-items: center;
+  justify-content: center; font-size: 0.7rem; font-weight: 700;
+  color: var(--gold); flex-shrink: 0; letter-spacing: 0.03em;
+}
+.testimonial-name { font-size: 0.825rem; font-weight: 600; color: var(--text); }
+.testimonial-role { font-size: 0.75rem; color: var(--mid-gray); }
+.testimonial-featured {
+  grid-column: span 2;
+  background: var(--navy); border-color: rgba(200,146,42,0.25);
+}
+.testimonial-featured .testimonial-text { color: rgba(255,255,255,0.75); }
+.testimonial-featured .testimonial-name { color: var(--white); }
+.testimonial-featured::before { color: rgba(200,146,42,0.2); }
+
+/* ── CONVERSION FOOTER ─────────────────────── */
+#convert {
+  background: var(--off-white);
+  border-top: 2px solid var(--smoke);
+  padding: 6rem 0;
+}
+.convert-heading { font-family: var(--font-display); font-size: 2rem; font-weight: 600; color: var(--text); margin-bottom: 0.75rem; text-align: center; }
+.convert-sub { text-align: center; color: var(--mid-gray); margin-bottom: 3rem; font-size: 1rem; }
+.convert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.convert-card {
+  background: var(--white); border: 1px solid var(--smoke);
+  border-radius: 12px; padding: 2.5rem 2rem; text-align: center;
+  transition: all var(--transition); position: relative;
+}
+.convert-card.featured {
+  border-color: var(--gold); background: var(--navy);
+  box-shadow: 0 12px 40px rgba(11,30,58,0.2);
+}
+.convert-card:hover:not(.featured) { box-shadow: 0 12px 36px rgba(11,30,58,0.1); transform: translateY(-2px); }
+.convert-card.featured:hover { transform: translateY(-2px); box-shadow: 0 20px 48px rgba(11,30,58,0.35); }
+.convert-icon { font-size: 2rem; margin-bottom: 1rem; }
+.convert-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+.convert-card.featured .convert-title { color: var(--white); }
+.convert-desc { font-size: 0.875rem; color: var(--mid-gray); line-height: 1.6; margin-bottom: 1.75rem; }
+.convert-card.featured .convert-desc { color: rgba(255,255,255,0.6); }
+.btn-card { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.8rem 1.5rem; border-radius: var(--radius); font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: all var(--transition); }
+.btn-card-primary { background: var(--gold); color: var(--navy); }
+.btn-card-primary:hover { background: var(--gold-light); box-shadow: 0 6px 20px rgba(200,146,42,0.3); }
+.btn-card-navy { background: var(--navy); color: var(--white); }
+.btn-card-navy:hover { background: var(--navy-light); }
+.btn-card-outline { background: transparent; color: var(--navy); border: 1px solid rgba(11,30,58,0.2); }
+.btn-card-outline:hover { background: var(--off-white); border-color: var(--navy); }
+.convert-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: var(--navy);
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.3rem 0.9rem; border-radius: 20px;
+}
+
+/* ── SITE FOOTER ───────────────────────────── */
+#footer { background: var(--navy); padding: 3rem 0 2rem; border-top: 1px solid rgba(200,146,42,0.15); }
+.footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+.footer-brand { max-width: 280px; }
+.footer-logo { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.footer-logo span { color: var(--gold); }
+.footer-tagline { font-size: 0.825rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+.footer-links h4 { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.75rem; }
+.footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.footer-links a { font-size: 0.825rem; color: rgba(255,255,255,0.5); text-decoration: none; transition: color var(--transition); }
+.footer-links a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); margin-top: 2rem; padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; }
+.footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+.footer-certs { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.cert-badge {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  border: 1px solid rgba(200,146,42,0.3); color: rgba(200,146,42,0.7);
+  padding: 0.25rem 0.6rem; border-radius: 4px;
+}
+
+/* ── RESPONSIVE ────────────────────────────── */
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-stats { max-width: 480px; }
+  .trifecta-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .testimonial-featured { grid-column: span 1; }
+  .tc-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .convert-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+  .layers-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 680px) {
+  .nav-links { display: none; flex-direction: column; padding: 1rem; background: var(--navy); position: absolute; top: 68px; left: 0; right: 0; border-bottom: 1px solid rgba(200,146,42,0.2); }
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: block; }
+  .hero-stats-grid { grid-template-columns: 1fr 1fr; }
+  .tc-specs { grid-template-columns: 1fr 1fr; }
+  .footer-inner { flex-direction: column; }
+  .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  .section { padding: 4rem 0; }
+}
+
+/* ── ANIMATIONS ────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.animate.visible { opacity: 1; transform: translateY(0); }
+
+.hero-eyebrow { animation: fadeUp 0.6s ease 0.1s both; }
+.hero-h1      { animation: fadeUp 0.6s ease 0.25s both; }
+.hero-sub     { animation: fadeUp 0.6s ease 0.4s both; }
+.hero-actions { animation: fadeUp 0.6s ease 0.55s both; }
+.hero-badges  { animation: fadeUp 0.6s ease 0.7s both; }
+.hero-stats   { animation: fadeUp 0.6s ease 0.5s both; }
+</style>
+</head>
+<body>
+
+<!-- ══ NAVIGATION ════════════════════════════ -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">KT<span>CS</span></a>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="#guide">Who We Serve</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#trifecta">Why KTCS</a></li>
+      <li><a href="#domains">Domains</a></li>
+      <li><a href="#training-center">Training Center</a></li>
+      <li><a href="#convert" class="nav-cta btn-primary btn">Talk to Us</a></li>
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════ -->
+<section id="hero" aria-label="Hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">28 Years of Excellence</div>
+      <h1 class="hero-h1">
+        Learning Solutions<br>
+        Built on <em>Real Expertise</em>
+      </h1>
+      <p class="hero-sub">
+        KTCS delivers end-to-end learning and consulting services globally — powered by a unique Trifecta of practitioners, credentialed experts, and gifted instructors. We partner internally first, so every recommendation is trusted, not sold.
+      </p>
+      <div class="hero-actions">
+        <a href="#convert" class="btn btn-primary">Book a Consultation ↗</a>
+        <a href="#services" class="btn btn-ghost">Explore Services</a>
+      </div>
+      <div class="hero-badges">
+        <span class="badge">WOSB Certified</span>
+        <span class="badge">EDWOSB Certified</span>
+        <span class="badge">SBA Small Business</span>
+        <span class="badge">Microsoft Cloud Partner</span>
+        <span class="badge">CompTIA Authorized</span>
+      </div>
+    </div>
+    <div class="hero-stats" aria-label="KTCS by the numbers">
+      <div class="hero-stats-grid">
+        <div class="stat-item">
+          <div class="stat-num">28</div>
+          <div class="stat-label">Years in Operation</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">67+</div>
+          <div class="stat-label">Global Cities Served</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">1,000+</div>
+          <div class="stat-label">Courses Available</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50%</div>
+          <div class="stat-label">Avg. Training Budget Saved</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GUIDE ME ═══════════════════════════════ -->
+<section id="guide" aria-labelledby="guide-heading">
+  <div class="container">
+    <div class="guide-label">Find Your Path</div>
+    <h2 class="guide-heading" id="guide-heading">Who are you looking to upskill?</h2>
+    <div class="guide-cards">
+      <a href="#convert" class="guide-card animate">
+        <div class="guide-icon">🏢</div>
+        <div class="guide-title">L&amp;D / HR Teams</div>
+        <div class="guide-desc">Training strategy, managed procurement, and workforce upskilling programs at scale.</div>
+        <span class="guide-arrow">→</span>
+      </a>
+      <a href="#convert" class="guide-card animate">
+        <div class="guide-icon">⚙️</div>
+        <div class="guide-title">IT &amp; Technical Orgs</div>
+        <div class="guide-desc">Cloud, cybersecurity, ERP, and infrastructure training from certified practitioners.</div>
+        <span class="guide-arrow">→</span>
+      </a>
+      <a href="#convert" class="guide-card animate">
+        <div class="guide-icon">📊</div>
+        <div class="guide-title">Operations &amp; Finance</div>
+        <div class="guide-desc">Process improvement, ERP end-user adoption, and operational efficiency training.</div>
+        <span class="guide-arrow">→</span>
+      </a>
+      <a href="#convert" class="guide-card animate">
+        <div class="guide-icon">🚀</div>
+        <div class="guide-title">Sales &amp; Leadership</div>
+        <div class="guide-desc">Soft skills, decision making, agile delivery, and AI fluency for professionals.</div>
+        <span class="guide-arrow">→</span>
+      </a>
+      <a href="https://www.knowledgetransferinc.com/computer-training/class-schedule" class="guide-card animate">
+        <div class="guide-icon">📅</div>
+        <div class="guide-title">Individual Learner</div>
+        <div class="guide-desc">Browse 1,000+ scheduled courses. Public classes in Minneapolis or attend virtually.</div>
+        <span class="guide-arrow">→</span>
+      </a>
+      <a href="#training-center" class="guide-card animate">
+        <div class="guide-icon">🏫</div>
+        <div class="guide-title">Need a Training Venue</div>
+        <div class="guide-desc">Rent Minneapolis's only independent dedicated training center. 1G fiber. Up to 30 seats.</div>
+        <span class="guide-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ THE TRIFECTA ═══════════════════════════ -->
+<section id="trifecta" aria-labelledby="trifecta-heading">
+  <div class="container">
+    <div class="trifecta-intro">
+      <div class="section-label">Our Differentiator</div>
+      <h2 class="section-heading light" id="trifecta-heading">The KTCS Trifecta</h2>
+      <p class="section-sub light">
+        Most training firms send instructors. We deploy a unique combination of three capabilities most organizations can't find in a single partner.
+      </p>
+    </div>
+    <div class="trifecta-grid">
+      <div class="trifecta-card animate">
+        <div class="trifecta-num">01</div>
+        <h3 class="trifecta-title">Practitioners</h3>
+        <p class="trifecta-desc">
+          Our instructors have done the job — not just studied it. Real-world implementation experience means training that maps directly to what learners face on the ground.
+        </p>
+        <span class="trifecta-tag">Applied Experience</span>
+      </div>
+      <div class="trifecta-card animate">
+        <div class="trifecta-num">02</div>
+        <h3 class="trifecta-title">Credentialed Experts</h3>
+        <p class="trifecta-desc">
+          Certified and current. Our subject matter experts hold the credentials that matter — Microsoft, CompTIA, PMI, ITIL, and more — kept sharp and renewed.
+        </p>
+        <span class="trifecta-tag">Certified &amp; Current</span>
+      </div>
+      <div class="trifecta-card animate">
+        <div class="trifecta-num">03</div>
+        <h3 class="trifecta-title">Gifted Instructors</h3>
+        <p class="trifecta-desc">
+          Knowing a subject and being able to teach it are different skills. We curate instructors who do both — because knowledge that doesn't transfer has no value.
+        </p>
+        <span class="trifecta-tag">True Educators</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ═══════════════════════════════ -->
+<section id="services" class="section section-alt" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-heading" id="services-heading">End-to-End Learning Solutions</h2>
+    <p class="section-sub">We partner with your internal teams first — L&amp;D, HR, IT, Sales, Operations — and only recommend external solutions after mapping to your resources.</p>
+    <div class="services-grid">
+      <div class="service-card animate">
+        <div class="service-icon">🗂️</div>
+        <h3 class="service-title">Training Management</h3>
+        <p class="service-desc">Global training procurement, vendor management, and budget optimization. Clients have increased training delivery 200% while reducing overall spend by 50%. We manage, monitor, and procure across 67+ cities worldwide.</p>
+        <a href="#convert" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card animate">
+        <div class="service-icon">🎯</div>
+        <h3 class="service-title">Customized Training</h3>
+        <p class="service-desc">Bespoke learning programs aligned to your business objectives — not off-the-shelf curricula. We start with a needs analysis, build to your workflows, and deliver through your preferred modality: ILT, virtual, or blended.</p>
+        <a href="#convert" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card animate">
+        <div class="service-icon">🔬</div>
+        <h3 class="service-title">Consulting Services</h3>
+        <p class="service-desc">Strategy and implementation consulting across ERP, Cloud, Cybersecurity, Agile delivery, and AI adoption. Our practitioners bring credentialed expertise — not theoretical frameworks.</p>
+        <a href="#convert" class="service-link">Learn more →</a>
+      </div>
+      <div class="service-card animate">
+        <div class="service-icon">✅</div>
+        <h3 class="service-title">Certification Testing</h3>
+        <p class="service-desc">Proctored certification exams from leading vendors — CompTIA, Microsoft, EC-Council, and more. Minneapolis's independently operated testing center with flexible scheduling and a professional, low-stress environment.</p>
+        <a href="https://www.knowledgetransferinc.com/testing" class="service-link">View testing →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DOMAINS ════════════════════════════════ -->
+<section id="domains" class="section" aria-labelledby="domains-heading">
+  <div class="container">
+    <div class="section-label">Coverage Areas</div>
+    <h2 class="section-heading" id="domains-heading">Training Domains</h2>
+    <p class="section-sub">Deep expertise across the technologies and skills that move businesses forward — at all three levels of your organization.</p>
+
+    <div class="layers-row animate">
+      <div class="layer-chip tech">
+        <div class="layer-name tech">Technical</div>
+        <div class="layer-desc">Infrastructure, development, administration</div>
+      </div>
+      <div class="layer-chip func">
+        <div class="layer-name func">Functional</div>
+        <div class="layer-desc">Business processes, configuration, workflows</div>
+      </div>
+      <div class="layer-chip user">
+        <div class="layer-name user">End-User</div>
+        <div class="layer-desc">Adoption, productivity, day-to-day tools</div>
+      </div>
+    </div>
+
+    <div class="domains-wrap">
+      <div class="domains-grid">
+        <div class="domain-pill animate">
+          <div class="domain-dot"></div>
+          <div>
+            <div class="domain-name">ERP Systems</div>
+            <div class="domain-sub">SAP, Oracle, Dynamics</div>
+          </div>
+        </div>
+        <div class="domain-pill animate">
+          <div class="domain-dot"></div>
+          <div>
+            <div class="domain-name">Cloud Platforms</div>
+            <div class="domain-sub">Azure, AWS, M365</div>
+          </div>
+        </div>
+        <div class="domain-pill animate">
+          <div class="domain-dot"></div>
+          <div>
+            <div class="domain-name">Cybersecurity</div>
+            <div class="domain-sub">CompTIA, EC-Council, CISSP</div>
+          </div>
+        </div>
+        <div class="domain-pill animate">
+          <div class="domain-dot"></div>
+          <div>
+            <div class="domain-name">Data &amp; Analytics</div>
+            <div class="domain-sub">BI, SQL, Power BI, AI/ML</div>
+          </div>
+        </div>
+        <div class="domain-pill animate">
+          <div class="domain-dot"></div>
+          <div>
+            <div class="domain-name">Agile &amp; Project Delivery</div>
+            <div class="domain-sub">PRINCE2 Agile, Scrum, PMP</div>
+          </div>
+        </div>
+        <div class="domain-pill animate">
+          <div class="domain-dot"></div>
+          <div>
+            <div class="domain-name">AI for Professionals</div>
+            <div class="domain-sub">Copilot, GenAI, Prompt Design</div>
+          </div>
+        </div>
+        <div class="domain-pill animate">
+          <div class="domain-dot"></div>
+          <div>
+            <div class="domain-name">Soft Skills &amp; Leadership</div>
+            <div class="domain-sub">Communication, management</div>
+          </div>
+        </div>
+        <div class="domain-pill animate">
+          <div class="domain-dot"></div>
+          <div>
+            <div class="domain-name">Problem Solving</div>
+            <div class="domain-sub">Decision frameworks, analytics</div>
+          </div>
+        </div>
+        <div class="domain-pill animate">
+          <div class="domain-dot"></div>
+          <div>
+            <div class="domain-name">Operational Efficiency</div>
+            <div class="domain-sub">ITIL, ITSM, process design</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRAINING CENTER ════════════════════════ -->
+<section id="training-center" class="section section-dark" aria-labelledby="tc-heading">
+  <div class="container">
+    <div class="section-label">Minneapolis, MN</div>
+    <h2 class="section-heading light" id="tc-heading">The Only Independent Dedicated Training Center in the Twin Cities</h2>
+    <div class="tc-grid">
+      <div>
+        <p class="section-sub light" style="margin-bottom: 2rem;">
+          KTCS operates a professional, fully-equipped training facility in Eagan, MN — purpose-built for learning, not repurposed conference space.
+        </p>
+        <div class="tc-feature-list">
+          <div class="tc-feature animate">
+            <div class="tc-feature-icon">⚡</div>
+            <div>
+              <div class="tc-feature-title">1 Gigabit Fiber Connectivity</div>
+              <div class="tc-feature-desc">Enterprise-grade internet for cloud labs, virtual training, and bandwidth-heavy certification exams.</div>
+            </div>
+          </div>
+          <div class="tc-feature animate">
+            <div class="tc-feature-icon">💻</div>
+            <div>
+              <div class="tc-feature-title">Fully Equipped Classrooms</div>
+              <div class="tc-feature-desc">Workstations, projection, dual monitors, and lab environments ready for technical courses.</div>
+            </div>
+          </div>
+          <div class="tc-feature animate">
+            <div class="tc-feature-icon">🎓</div>
+            <div>
+              <div class="tc-feature-title">Public, Private &amp; Rental Classes</div>
+              <div class="tc-feature-desc">Open enrollment, private corporate sessions, or rent the room for your own training events.</div>
+            </div>
+          </div>
+          <div class="tc-feature animate">
+            <div class="tc-feature-icon">🖥️</div>
+            <div>
+              <div class="tc-feature-title">Hybrid-Ready Classrooms</div>
+              <div class="tc-feature-desc">Attend in-person or virtually with full parity — same instructor, same experience, your choice.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="tc-specs">
+          <div class="tc-spec animate">
+            <div class="tc-spec-num">30</div>
+            <div class="tc-spec-label">Max Classroom Seats</div>
+          </div>
+          <div class="tc-spec animate">
+            <div class="tc-spec-num">1G+</div>
+            <div class="tc-spec-label">Fiber Bandwidth</div>
+          </div>
+          <div class="tc-spec animate">
+            <div class="tc-spec-num">2</div>
+            <div class="tc-spec-label">Classroom Configurations</div>
+          </div>
+          <div class="tc-spec animate">
+            <div class="tc-spec-num">#1</div>
+            <div class="tc-spec-label">Independent Testing Center</div>
+          </div>
+        </div>
+        <div class="tc-cta-box animate">
+          <p>Looking to host a private training event, offsite, or certification testing session? KTCS provides a professional environment with full technical support — without the hotel conference room markup.</p>
+          <a href="#convert" class="btn btn-primary">Inquire About Room Rental →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ═══════════════════════════ -->
+<section id="testimonials" class="section section-alt" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="section-label">Client Outcomes</div>
+    <h2 class="section-heading" id="testimonials-heading">Results That Speak for Themselves</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card testimonial-featured animate">
+        <p class="testimonial-text">
+          One of my key goals was to reduce the overall costs of training delivered and centralize operations to provide employees and managers with a one-stop, best-priced resource. In the first two years, we increased overall delivery of IT training by 200% and reduced the overall budget by 50% — while actually increasing training hours.
+        </p>
+        <div class="testimonial-source">
+          <div class="testimonial-dot" style="background: var(--gold-pale); color: var(--navy);">BB</div>
+          <div>
+            <div class="testimonial-name" style="color: var(--white);">Senior Training Manager</div>
+            <div class="testimonial-role" style="color: rgba(255,255,255,0.5);">Best Buy</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card animate">
+        <p class="testimonial-text">
+          Your training management program has taken the burden from me in finding suitable classes and vendors, which is what I had to do in the past. It's allowed me to concentrate on my actual work.
+        </p>
+        <div class="testimonial-source">
+          <div class="testimonial-dot">TR</div>
+          <div>
+            <div class="testimonial-name">Data Center Manager</div>
+            <div class="testimonial-role">Thomson Reuters</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card animate">
+        <p class="testimonial-text">
+          I appreciate this program very much. Things are always followed up on, classes are scheduled ahead of time, and dates are provided to fit our individual schedules. The individualization aspect of this program is excellent.
+        </p>
+        <div class="testimonial-source">
+          <div class="testimonial-dot">ML</div>
+          <div>
+            <div class="testimonial-name">Training Program Participant</div>
+            <div class="testimonial-role">Merrill Lynch</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card animate">
+        <p class="testimonial-text">
+          Words alone do not describe the experience we had with KTCS. From the moment I contacted them about a two-event SQL Server training engagement, all the way through to completion, KTCS was right there helping along. I estimate KTCS saved us several thousands of dollars on that event alone.
+        </p>
+        <div class="testimonial-source">
+          <div class="testimonial-dot">RS</div>
+          <div>
+            <div class="testimonial-name">Richard S.</div>
+            <div class="testimonial-role">IP Management Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONVERSION ════════════════════════════ -->
+<section id="convert" class="section" aria-labelledby="convert-heading">
+  <div class="container">
+    <h2 class="convert-heading" id="convert-heading">Ready to Get Started?</h2>
+    <p class="convert-sub">Three ways to engage — choose the path that fits where you are today.</p>
+    <div class="convert-grid">
+      <div class="convert-card animate">
+        <div class="convert-icon">📞</div>
+        <h3 class="convert-title">Book a Consultation</h3>
+        <p class="convert-desc">Talk directly with Gary or Sarah. We'll map your needs to internal resources first, then recommend a strategy — not a catalog.</p>
+        <a href="https://www.knowledgetransferinc.com/contact-us" class="btn-card btn-card-navy">Schedule a Call →</a>
+      </div>
+      <div class="convert-card featured animate">
+        <span class="convert-badge">Most Common</span>
+        <div class="convert-icon">📋</div>
+        <h3 class="convert-title">Request a Quote</h3>
+        <p class="convert-desc">Private training, custom curriculum, or managed procurement? Tell us what you need and we'll build a proposal tailored to your team and budget.</p>
+        <a href="https://www.knowledgetransferinc.com/contact-us" class="btn-card btn-card-primary">Get a Custom Quote →</a>
+      </div>
+      <div class="convert-card animate">
+        <div class="convert-icon">📚</div>
+        <h3 class="convert-title">Browse the Catalog</h3>
+        <p class="convert-desc">Over 1,000 courses across all domains. Search by topic, brand, or scheduled date. Public classes in Minneapolis and virtual options available.</p>
+        <a href="https://www.knowledgetransferinc.com/computer-training" class="btn-card btn-card-outline">View All Courses →</a>
+      </div>
+    </div>
+
+    <!-- Direct contact strip -->
+    <div style="margin-top: 3rem; text-align: center; padding: 2rem; background: var(--off-white); border: 1px solid var(--smoke); border-radius: 10px;">
+      <p style="font-size: 0.875rem; color: var(--mid-gray); margin-bottom: 0.5rem;">Prefer to reach us directly?</p>
+      <a href="tel:6519053729" style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--navy); text-decoration: none;">651-905-3729</a>
+      <span style="margin: 0 1rem; color: var(--smoke);">|</span>
+      <a href="https://www.knowledgetransferinc.com/contact-us" style="font-size: 0.9rem; color: var(--gold); font-weight: 600; text-decoration: none;">Send us a message →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════ -->
+<footer id="footer" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">Knowledge Transfer <span>Consulting Services</span></div>
+        <p class="footer-tagline">End-to-end learning solutions powered by practitioners, credentialed experts, and gifted instructors. Trusted partner to global organizations for 28 years.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="https://www.knowledgetransferinc.com/corporate-services/training-management">Training Management</a></li>
+          <li><a href="https://www.knowledgetransferinc.com/corporate-services/customized-training">Customized Training</a></li>
+          <li><a href="https://www.knowledgetransferinc.com/corporate-services/consulting-services">Consulting</a></li>
+          <li><a href="https://www.knowledgetransferinc.com/corporate-services/room-rentals">Room Rentals</a></li>
+          <li><a href="https://www.knowledgetransferinc.com/testing">Testing Center</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Training</h4>
+        <ul>
+          <li><a href="https://www.knowledgetransferinc.com/computer-training">Course Catalog</a></li>
+          <li><a href="https://www.knowledgetransferinc.com/computer-training/class-schedule">Class Schedule</a></li>
+          <li><a href="https://www.knowledgetransferinc.com/computer-training/topics">Browse by Topic</a></li>
+          <li><a href="https://www.knowledgetransferinc.com/computer-training/brands">Browse by Brand</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://www.knowledgetransferinc.com/about-us">About KTCS</a></li>
+          <li><a href="https://www.knowledgetransferinc.com/news">News</a></li>
+          <li><a href="https://www.knowledgetransferinc.com/contact-us">Contact Us</a></li>
+          <li><a href="tel:6519053729">651-905-3729</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Knowledge Transfer Consulting Services, Inc. All rights reserved. Eagan, MN.</p>
+      <div class="footer-certs">
+        <span class="cert-badge">WOSB</span>
+        <span class="cert-badge">EDWOSB</span>
+        <span class="cert-badge">Microsoft Cloud Partner</span>
+        <span class="cert-badge">CompTIA Authorized</span>
+        <span class="cert-badge">EC-Council Partner</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ JAVASCRIPT ══════════════════════════════ -->
+<script>
+/* --- Sticky nav shadow on scroll --- */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 30);
+}, { passive: true });
+
+/* --- Mobile nav toggle --- */
+const toggle = document.getElementById('nav-toggle');
+const menu   = document.getElementById('nav-menu');
+toggle.addEventListener('click', () => {
+  const open = menu.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', open);
+  // Animate hamburger to X
+  const spans = toggle.querySelectorAll('span');
+  if (open) {
+    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+  } else {
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  }
+});
+
+/* Close mobile menu on nav link click */
+menu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    menu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', false);
+    toggle.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  });
+});
+
+/* --- Intersection Observer scroll animations --- */
+const animEls = document.querySelectorAll('.animate');
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+);
+animEls.forEach((el, i) => {
+  el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+  observer.observe(el);
+});
+
+/* --- Smooth scroll for anchor links --- */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = 72; // nav height
+      window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
